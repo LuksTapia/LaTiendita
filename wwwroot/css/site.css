@@ -1,0 +1,25 @@
+html {
+  font-size: 14px;
+}
+
+@media (min-width: 768px) {
+  html {
+    font-size: 16px;
+  }
+}
+
+html {
+  position: relative;
+  min-height: 100%;
+}
+
+body {
+  margin-bottom: 60px;
+}
+
+.adidas {
+    height: 80vh;
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-image: url(https://cdn.denimandcloth.com.au/content/uploads/2014/11/18121834/adidas-banner.jpg);
+}

@@ -1,0 +1,116 @@
+﻿@model LaTiendita.Models.Producto
+
+@{
+    ViewData["Title"] = "Edit";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h1>Edit</h1>
+
+<h4>Producto</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Edit">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input id="Id" type="hidden" asp-for="Id" />
+            <div class="form-group">
+                <label asp-for="Nombre" class="control-label"></label>
+                <input asp-for="Nombre" class="form-control" />
+                <span asp-validation-for="Nombre" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Precio" class="control-label"></label>
+                <input asp-for="Precio" class="form-control" />
+                <span asp-validation-for="Precio" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Detalle" class="control-label"></label>
+                <input asp-for="Detalle" class="form-control" />
+                <span asp-validation-for="Detalle" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="CategoriaId" class="control-label"></label>
+                <select asp-for="CategoriaId" class="form-control" asp-items="@ViewBag.CategoriaId"></select>
+                <span asp-validation-for="CategoriaId" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label>Talles: </label>
+                <select id="talleId" class="form-select" asp-items="@ViewBag.Talles"></select>
+            </div>
+            
+
+
+            <label>Ingresar cantidad : </label>
+            <input class="form-control" type="number" 
+                   id="cantidad" 
+                   name="cantidad"
+                   style="display:inline"
+                   aria-describedby="FechaNueva-error" aria-invalid="false">
+            <button onclick="CrearProductoTalle()" class="btn btn-outline-primary" type="button">Agregar</button>
+            
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>
+                            Talle
+                        </th>
+                        <th>
+                            Cantidad
+                        </th>
+                        <th></th>
+                    </tr>
+                </thead>
+                 <tbody>
+                    @foreach (var item in Model.Talles)
+                    {
+                        <tr>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Talle.Nombre)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Cantidad)
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+            <div class="form-group">
+                <input type="submit" value="Save" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+
+    <script>
+        function CrearProductoTalle() {
+            var talleId = document.getElementById('talleId').value;
+            var productoId = document.getElementById('Id').value;
+            var cantidad = document.getElementById('cantidad').value;
+            
+            var request = { 
+                productoId: productoId, 
+                talleId: talleId, 
+                cantidad: cantidad 
+            }
+
+            $.post("/Producto/AddTalle", request,function (data) {})
+                .done(function () {
+                    location.reload();
+                })
+                .fail(function () {
+                    alert("error");
+                })
+                .always(function () {
+                    
+                });
+            
+        }
+    </script>
+    }
