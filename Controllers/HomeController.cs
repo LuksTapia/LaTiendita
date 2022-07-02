@@ -42,7 +42,7 @@ namespace LaTiendita.Controllers
             {
 
                 //Quiero saber si en la base existe, sino tengo que crearlo
-                bool usuarioExiste = usuario != null;
+                bool usuarioExiste = (usuario != null);
 
                 if (usuarioExiste)
                 {
@@ -51,7 +51,7 @@ namespace LaTiendita.Controllers
                 }
                 else
                 {
-                    return RedirectToAction("Registrarse", "Usuarios", email);
+                    return RedirectToAction("Registrarse", "Usuarios");
                 }
 
             }

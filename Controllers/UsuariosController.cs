@@ -54,11 +54,11 @@ namespace LaTiendita.Controllers
             return View();
         }
 
-        public IActionResult Registrarse(string email)
+        public IActionResult Registrarse()
         {
 
 
-            return View(email);
+            return View();
         }
 
         [HttpPost]
