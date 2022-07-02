@@ -183,7 +183,7 @@ namespace LaTiendita.Controllers
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
             var productosAChequear = await _context.ProductoTalle
-               .Where(x => x.Id == id)
+               .Where(x => x.TalleId == id)
                .ToListAsync();
 
             if (sePuedeBorrar(productosAChequear))
