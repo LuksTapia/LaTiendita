@@ -2,7 +2,7 @@
 using Microsoft.EntityFrameworkCore;
 
 namespace LaTiendita.Stock
-{ 
+{
     public class BaseDeDatos : DbContext
     {
         public DbSet<Usuario> Usuarios { get; set; }
