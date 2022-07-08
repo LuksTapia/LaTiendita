@@ -158,9 +158,9 @@ namespace LaTiendita.Controllers
         public async Task<IActionResult> NoStock()
         {
             var productos = await _context.Producto
-                .Include(x => x.Talles)
-                .Include(p => p.Categoria)
-                .ToListAsync();
+               .Include(x => x.Talles)
+               .Include(p => p.Categoria)
+               .ToListAsync();
 
             ViewData["Talles"] = new SelectList(_context.Talles, "Id", "Nombre");
             return View(productos);
