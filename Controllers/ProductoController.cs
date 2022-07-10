@@ -51,7 +51,7 @@ namespace LaTiendita.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("ProductoId,Nombre,Precio,Detalle,CategoriaId")] Producto Producto)
+        public async Task<IActionResult> Create([Bind("ProductoId,Nombre,Precio,Detalle,Imagen,CategoriaId")] Producto Producto)
         {
             if (ModelState.IsValid)
             {
@@ -87,7 +87,7 @@ namespace LaTiendita.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id, ProductoId, Nombre, Precio, Detalle, CategoriaId")] Producto Producto)
+        public async Task<IActionResult> Edit(int id, [Bind("Id, Nombre, Precio, Detalle, Imagen,CategoriaId")] Producto Producto)
         {
             if (id != Producto.Id)
             {

@@ -51,6 +51,7 @@ namespace LaTiendita.Controllers
                 }
                 else
                 {
+                    TempData["email"] = email;
                     return RedirectToAction("Registrarse", "Usuarios");
                 }
 
