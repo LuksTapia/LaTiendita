@@ -1,4 +1,6 @@
-﻿namespace LaTiendita.Models
+﻿using System.ComponentModel.DataAnnotations;
+
+namespace LaTiendita.Models
 {
     public class ProductoTalle
     {

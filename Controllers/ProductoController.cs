@@ -181,13 +181,17 @@ namespace LaTiendita.Controllers
             var productoTalle = await _context.ProductoTalle
                 .FirstOrDefaultAsync(x => x.ProductoId == productoId && x.TalleId == talleId);
 
-            if(productoTalle is null)
-                _context.ProductoTalle.Add(new ProductoTalle() { ProductoId = productoId, TalleId = talleId, Cantidad = cantidad });
-            else
+            if (cantidad > 0)
             {
-                productoTalle.Cantidad += cantidad;
-                _context.ProductoTalle.Update(productoTalle);
+                if (productoTalle is null)
+                    _context.ProductoTalle.Add(new ProductoTalle() { ProductoId = productoId, TalleId = talleId, Cantidad = cantidad });
+                else
+                {
+                    productoTalle.Cantidad += cantidad;
+                    _context.ProductoTalle.Update(productoTalle);
+                }
             }
+           
 
             await _context.SaveChangesAsync();
 
