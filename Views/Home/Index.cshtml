@@ -3,19 +3,20 @@
     ViewData["Title"] = "Ingresar";
     Layout = "~/Views/Shared/_LayoutInicial.cshtml";
 }
-@if (@TempData["faltaMail"] != null)
-{
-    <div class="alert alert-danger" role="alert">
-     @TempData["faltaMail"]
-    </div>
 
-
-}
 
 
 
 
 <h1 style="color:gold">La Tiendita</h1>
+@if (@TempData["faltaMail"] != null)
+{
+    <div class="alert alert-warning" role="alert">
+     @TempData["faltaMail"]
+    </div>
+
+
+}
 <div class="justify-content-center" >
 <div style="background-color:black; opacity:90%; border-radius:10px; height:20vh; width:30vw; text-align:center ">
     

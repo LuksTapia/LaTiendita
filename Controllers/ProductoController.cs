@@ -8,7 +8,7 @@ using LaTiendita.Stock;
 
 namespace LaTiendita.Controllers
 {
-    
+
     public class ProductoController : Controller
     {
         private readonly BaseDeDatos _context;
@@ -49,9 +49,12 @@ namespace LaTiendita.Controllers
             return View();
         }
 
+
+        //ProductoId
+
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("ProductoId,Nombre,Precio,Detalle,Imagen,CategoriaId")] Producto Producto)
+        public async Task<IActionResult> Create([Bind("Id,Nombre,Precio,Detalle,Imagen,CategoriaId")] Producto Producto)
         {
             if (ModelState.IsValid)
             {
@@ -74,12 +77,12 @@ namespace LaTiendita.Controllers
                 .Include(x => x.Talles)
                     .ThenInclude(x => x.Talle)
                 .SingleOrDefaultAsync(x => x.Id == id);
-            
+
             if (Producto == null)
             {
                 return NotFound();
             }
-            
+
             ViewData["CategoriaId"] = new SelectList(_context.Categorias, "Id", "Nombre", Producto.CategoriaId);
             ViewData["Talles"] = new SelectList(_context.Talles, "Id", "Nombre", Producto.CategoriaId);
             return View(Producto);
@@ -103,7 +106,7 @@ namespace LaTiendita.Controllers
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    if (! await ProductoExists(Producto.Id))
+                    if (!await ProductoExists(Producto.Id))
                     {
                         return NotFound();
                     }
@@ -152,7 +155,7 @@ namespace LaTiendita.Controllers
             {
                 _context.Producto.Remove(Producto);
             }
-            
+
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
@@ -162,7 +165,7 @@ namespace LaTiendita.Controllers
             return await _context.Producto.AnyAsync(e => e.Id == id);
         }
 
-        private async Task<bool> TalleExists (int id)
+        private async Task<bool> TalleExists(int id)
         {
             return await _context.Talles.AnyAsync(e => e.Id == id);
         }
@@ -186,12 +189,12 @@ namespace LaTiendita.Controllers
                     _context.ProductoTalle.Update(productoTalle);
                 }
             }
-           
+
 
             await _context.SaveChangesAsync();
 
             return Ok();
         }
     }
+
 }
-    

@@ -30,7 +30,7 @@ namespace LaTiendita.Controllers
         {
             if(email == null)
             {
-                TempData["faltaMail"] = "Debe existir mail";
+                TempData["faltaMail"] = "El mail no debe estar vacío";
                 return View("Index", "Home");
             }
 
