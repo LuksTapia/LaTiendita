@@ -28,7 +28,7 @@
 <div class="d-flex justify-content-between flex-wrap align-content-between">
 
 @foreach (var item in Model) {
-    <div class="card" style="width: 18rem;">
+    <div class="card" style="width: 18rem; margin-top: 40px;">
         <img src="@Html.DisplayFor(modelItem => item.Imagen)" class="card-img-top" alt="...">
         <div class="card-body">
             <input hidden id="productoId" value="@Html.DisplayFor(modelItem => item.Id)">
@@ -42,7 +42,7 @@
         Talle:
         <select id="select_@item.Id" class="form-select" asp-items="@ViewBag.Talles"></select>
         <br />
-        <a href="#" class="btn btn-primary" onclick="AgregarProductoAlCarrito(@item.Id)">Agregar Al Carrito</a>
+        <button type="submit" class="btn btn-primary" onclick="AgregarProductoAlCarrito(@item.Id)">Agregar Al Carrito</button>
     </div>
     </div>
     
