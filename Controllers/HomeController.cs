@@ -28,6 +28,12 @@ namespace LaTiendita.Controllers
         [HttpPost]
         public IActionResult Index(string email)
         {
+            if(email == null)
+            {
+                TempData["faltaMail"] = "Debe existir mail";
+                return View("Index", "Home");
+            }
+
             var usuario = _context
                .Usuarios
                .Where(o => o.Email.ToUpper().Equals(email.ToUpper()))

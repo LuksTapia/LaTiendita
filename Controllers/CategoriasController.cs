@@ -50,12 +50,20 @@ namespace LaTiendita.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("CategoriaId,Nombre")] Categoria categoria)
         {
-            if (ModelState.IsValid)
+            if(!CategoriaExists2(categoria.Nombre))
             {
-                _context.Add(categoria);
-                await _context.SaveChangesAsync();
-                return RedirectToAction(nameof(Index));
+                if (ModelState.IsValid)
+                {
+                    _context.Add(categoria);
+                    await _context.SaveChangesAsync();
+                    return RedirectToAction(nameof(Index));
+                }
+            } else
+            {
+                TempData["existe"] = "Existe ya la categoria";
             }
+
+            
             return View(categoria);
         }
 
@@ -83,26 +91,37 @@ namespace LaTiendita.Controllers
                 return NotFound();
             }
 
-            if (ModelState.IsValid)
+
+            if (!CategoriaExists2(categoria.Nombre))
             {
-                try
+                if (ModelState.IsValid)
                 {
-                    _context.Update(categoria);
-                    await _context.SaveChangesAsync();
-                }
-                catch (DbUpdateConcurrencyException)
-                {
-                    if (!CategoriaExists(categoria.Id))
+                    try
                     {
-                        return NotFound();
+                        _context.Update(categoria);
+                        await _context.SaveChangesAsync();
                     }
-                    else
+                    catch (DbUpdateConcurrencyException)
                     {
-                        throw;
+                        if (!CategoriaExists(categoria.Id))
+                        {
+                            return NotFound();
+                        }
+                        else
+                        {
+                            throw;
+                        }
                     }
+                    return RedirectToAction(nameof(Index));
                 }
-                return RedirectToAction(nameof(Index));
+              
+            } else
+            {
+                TempData["existe"] = "Existe ya la categoria";
             }
+
+
+          
             return View(categoria);
         }
 
@@ -139,5 +158,12 @@ namespace LaTiendita.Controllers
         {
             return _context.Categorias.Any(e => e.Id == id);
         }
+
+        private bool CategoriaExists2(string nombre)
+        {
+            return _context.Categorias.Any(e => e.Nombre.ToUpper().Equals(nombre.ToUpper()));
+        }
+
+
     }
 }

@@ -5,6 +5,14 @@
 }
 
 <h1>Create</h1>
+@if (@TempData["existe"] != null)
+{
+    <div class="alert alert-danger" role="alert">
+     @TempData["existe"]
+    </div>
+
+
+}
 
 <h4>Categoria</h4>
 <hr />
