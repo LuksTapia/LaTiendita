@@ -163,13 +163,7 @@ namespace LaTiendita.Controllers
             [ValidateAntiForgeryToken]
             public async Task<IActionResult> DeleteConfirmed(int id)
             {
-                //var productosAChequear = await _context.ProductoTalle
-                //   .Where(x => x.TalleId == id)
-                //   .ToListAsync();
-
-                //var productosAChequearDos = await _context.ProductoTalle
-                //   .AnyAsync(x => x.TalleId == id  && x.Cantidad > 0);
-
+              
 
                 if (!await TieneStock(id))
                 {
@@ -180,7 +174,7 @@ namespace LaTiendita.Controllers
                 }
                 else
                 {
-                    TempData["msgBorrado"] = "No se puede eliminar un talle con  productos en stock";
+                    TempData["msgBorrado"] = "No se puede eliminar un talle con productos en stock";
                     return RedirectToAction(nameof(Index));
 
                 }
