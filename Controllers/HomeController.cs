@@ -28,11 +28,7 @@ namespace LaTiendita.Controllers
         [HttpPost]
         public IActionResult Index(string email)
         {
-            if(email == null)
-            {
-                TempData["faltaMail"] = "El mail no debe estar vacío";
-                return View("Index", "Home");
-            }
+            
 
             var usuario = _context
                .Usuarios

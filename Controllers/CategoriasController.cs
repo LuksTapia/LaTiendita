@@ -50,20 +50,29 @@ namespace LaTiendita.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("CategoriaId,Nombre")] Categoria categoria)
         {
-            if(!CategoriaExists2(categoria.Nombre))
+            if (!string.IsNullOrEmpty(categoria.Nombre))
             {
-                if (ModelState.IsValid)
+
+                if (!CategoriaExists2(categoria.Nombre))
                 {
-                    _context.Add(categoria);
-                    await _context.SaveChangesAsync();
-                    return RedirectToAction(nameof(Index));
+                    if (ModelState.IsValid)
+                    {
+                        _context.Add(categoria);
+                        await _context.SaveChangesAsync();
+                        return RedirectToAction(nameof(Index));
+                    }
                 }
-            } else
+                else
+                {
+                    TempData["existe"] = "La categoria ya existe";
+                }
+            }
+            else
             {
-                TempData["existe"] = "Existe ya la categoria";
+                TempData["null"] = "No se puede ingresar valores vacios";
             }
 
-            
+
             return View(categoria);
         }
 

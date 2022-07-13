@@ -56,6 +56,8 @@ namespace LaTiendita.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("Id,Nombre,Precio,Detalle,Imagen,CategoriaId")] Producto Producto)
         {
+            
+
             if (ModelState.IsValid)
             {
                 _context.Add(Producto);
