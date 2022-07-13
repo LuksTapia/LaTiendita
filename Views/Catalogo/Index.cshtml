@@ -6,6 +6,22 @@
 }
 
 <h1>Catálogo</h1>
+@if (@TempData["msgError"] != null)
+{
+    <div class="alert alert-danger" role="alert">
+     @TempData["msgError"]
+    </div>
+
+
+}
+@if (@TempData["msgOk"] != null)
+{
+    <div class="alert alert-info" role="alert">
+     @TempData["msgOk"]
+    </div>
+
+
+}
 
 <br>
 <br>
@@ -51,8 +67,9 @@
             }
 
             $.post("/Carrito/AddProduct", request,function (data) {})
-                .done(function () {
+                .done(function (res) {
                     location.reload();
+                    console.log("res",res);
                 })
                 .fail(function () {
                     alert("error");
