@@ -6,6 +6,15 @@
 }
 
 <h1>Create</h1>
+@if (@TempData["null"] != null)
+{
+    <div class="alert alert-danger" role="alert">
+     @TempData["null"]
+    </div>
+
+
+}
+
 
 <h4>Producto</h4>
 <hr />

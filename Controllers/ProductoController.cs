@@ -56,15 +56,22 @@ namespace LaTiendita.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("Id,Nombre,Precio,Detalle,Imagen,CategoriaId")] Producto Producto)
         {
-            
-
-            if (ModelState.IsValid)
+            if (!string.IsNullOrEmpty(Producto.Nombre))
             {
-                _context.Add(Producto);
-                await _context.SaveChangesAsync();
-                return RedirectToAction(nameof(Index));
+                if (ModelState.IsValid)
+                {
+                    _context.Add(Producto);
+                    await _context.SaveChangesAsync();
+                    return RedirectToAction(nameof(Index));
+                }
+                ViewData["CategoriaId"] = new SelectList(_context.Categorias, "CategoriaId", "Nombre", Producto.CategoriaId);
             }
-            ViewData["CategoriaId"] = new SelectList(_context.Categorias, "CategoriaId", "Nombre", Producto.CategoriaId);
+            else
+            {
+                TempData["null"] = "No se puede ingresar valores vacios";
+                return RedirectToAction();
+            }
+
             return View(Producto);
         }
 
@@ -92,35 +99,45 @@ namespace LaTiendita.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id, Nombre, Precio, Detalle, Imagen,CategoriaId")] Producto Producto)
+        public async Task<IActionResult> Edit(int id, [Bind("Id,Nombre,Precio,Detalle,Imagen,CategoriaId")] Producto Producto)
         {
-            if (id != Producto.Id)
+            if (!string.IsNullOrEmpty(Producto.Nombre))
             {
-                return NotFound();
+                if (id != Producto.Id)
+                {
+                    return NotFound();
+                }
+
+                if (ModelState.IsValid)
+                {
+                    try
+                    {
+                        _context.Update(Producto);
+                        await _context.SaveChangesAsync();
+                    }
+                    catch (DbUpdateConcurrencyException)
+                    {
+                        if (!await ProductoExists(Producto.Id))
+                        {
+                            return NotFound();
+                        }
+                        else
+                        {
+                            throw;
+                        }
+                    }
+                    return RedirectToAction(nameof(Index));
+                }
+
+                ViewData["CategoriaId"] = new SelectList(_context.Categorias, "CategoriaId", "Nombre", Producto.CategoriaId);
+                ViewData["TalleId"] = new SelectList(_context.ProductoTalle, "TalleId", "Nombre", Producto.Talles);
+            }
+            else
+            {
+                TempData["null"] = "No se puede ingresar valores vacios";
+                return RedirectToAction();
             }
 
-            if (ModelState.IsValid)
-            {
-                try
-                {
-                    _context.Update(Producto);
-                    await _context.SaveChangesAsync();
-                }
-                catch (DbUpdateConcurrencyException)
-                {
-                    if (!await ProductoExists(Producto.Id))
-                    {
-                        return NotFound();
-                    }
-                    else
-                    {
-                        throw;
-                    }
-                }
-                return RedirectToAction(nameof(Index));
-            }
-            ViewData["CategoriaId"] = new SelectList(_context.Categorias, "CategoriaId", "Nombre", Producto.CategoriaId);
-            ViewData["TalleId"] = new SelectList(_context.ProductoTalle, "TalleId", "Nombre", Producto.Talles);
             return View(Producto);
         }
 
